@@ -1,0 +1,127 @@
+<div *ngIf="!transportUnitsIsOk" class="loader-container">
+
+  <img src="assets/img/loaders/loader.svg" alt="">
+  <span class="text-white">Estamos carregando alguns recursos. Aguarde</span>
+</div>
+
+<div class="errors-message-notify-container">
+  <app-errors-notify
+    [messages]="errorsMessage" *ngFor="let errorsMessage of errorsMessages; let i = index"
+    (click)="removeMessage(i)">
+  </app-errors-notify>
+</div>
+
+<div class="main-container">
+
+  <app-header [brand]="brandName">
+
+    <div class="container align-content-center" filter>
+      <div class="input-group ">
+
+        <div class="auto-complete-container flex-row">
+
+          <button
+            class="btn btn btn-success dropdown-toggle mr-1 "
+            type="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">Filtros
+          </button>
+
+          <input
+            class="form-control "
+            type="text"
+            placeholder="Pesquisar rota"
+            aria-label="Pesquisar rotas"
+            value="{{filtered}}"
+            (keyup)="filtered = $event.target.value">
+
+          <app-transport-lines-filter-display
+            style="z-index: 999"
+            (selectedTransportLine)="selectedTransportLine($event)"
+            [classList]="'auto-complete'"
+            [transportLines]="transportationLines | transportLinesFilter:filtered:busSelected:vanSelected">
+          </app-transport-lines-filter-display>
+
+          <div class="dropdown-menu select-cursor" (click)="$event.stopPropagation()">
+
+            <div class="ml-4">
+              <input class="form-check-input cursor-pointer" type="checkbox" [checked]="busSelected"
+                     (change)="busSelected=!busSelected"
+                     id="defaultCheck1">
+              <label class="form-check-label cursor-pointer" for="defaultCheck1">
+                Rotas Ônibus
+              </label>
+            </div>
+
+            <div class="ml-4 ">
+              <input class="form-check-input cursor-pointer" type="checkbox" [checked]="vanSelected"
+                     (change)="vanSelected=!vanSelected"
+                     id="defaultCheck2">
+              <label class="form-check-label cursor-pointer" for="defaultCheck2">
+                Rotas Lotação
+              </label>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </app-header>
+
+  <div class="itinerary-routes-container py-2">
+    <div
+      class="d-flex cursor-pointer"
+      data-toggle="collapse"
+      data-target="#display_itinerary">
+      <span class="px-2 flex-grow-1">Visualizar Rotas</span>
+      <div class="pr-2">
+        <i
+          class="material-icons itinerary-routes-display">
+          remove_red_eye
+        </i>
+      </div>
+    </div>
+
+    <div class="collapse show" id="display_itinerary">
+      <div class="itinerary-routes"
+           *ngFor="let transportLineItinerary of transportLinesItinerary; let i = index">
+        <i class="material-icons text-danger" style=" cursor: pointer;" (click)="removeItinerarTtransportLine(i)">delete_forever</i>
+        <i class="material-icons px-2"
+           [ngStyle]="{'color':transportLineItinerary.itineraryStrokeColor}">{{transportLineItinerary.icon}} </i>
+        <div class="flex-grow-1">{{transportLineItinerary.codigo}} - {{transportLineItinerary.nome}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="maps-container">
+
+    <agm-map [latitude]="baseLat"
+             [zoom]="baseZoom"
+             [longitude]="baseLng"
+             [zoomControl]="false"
+             [streetViewControl]="false">
+
+      <agm-polyline
+        *ngFor="let transportLineItinerary of transportLinesItinerary"
+        [strokeColor]="transportLineItinerary.itineraryStrokeColor">
+
+        <agm-marker (markerClick)="goToLink( transportUnits.lat, transportUnits.lng)"
+                    *ngFor="let transportUnits of transportLineItinerary.transportUnits"
+                    [latitude]="transportUnits.lat"
+                    [longitude]="transportUnits.lng"
+                    iconUrl="assets/img/icons/busicon.png">
+        </agm-marker>
+
+        <agm-polyline-point
+          *ngFor="let itinerary of transportLineItinerary.itinerary"
+          [latitude]="itinerary.lat"
+          [longitude]="itinerary.lng">
+        </agm-polyline-point>
+      </agm-polyline>
+
+    </agm-map>
+  </div>
+</div>
+

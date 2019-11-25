@@ -1,0 +1,84 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+agm-map {
+  height: 100%;
+}
+
+.itinerary-routes-display {
+  color: #009688;
+  padding: 0;
+  margin: 0;
+}
+
+.auto-complete-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.maps-container {
+  flex-grow: 1
+}
+
+.loader-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
+.auto-complete {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  float: left;
+}
+
+.itinerary-routes {
+  display: flex;
+  flex-direction: row;
+  padding: 0 16px;
+}
+
+.itinerary-routes-container {
+  overflow: hidden;
+  z-index: 998;
+  width: 360px;
+  max-width: 100vw;
+  max-height: 400px;
+  background-color: white;
+  position: absolute;
+  margin-left: 0;
+}
+
+.control-bar {
+  overflow-y: scroll;
+  width: 100vw;
+  background-color: white;
+  position: absolute;
+  z-index: 998;
+  padding: 5px;
+  border-bottom: 1px solid #211b19;
+}
+
+
+@media (min-width: 850px) {
+  .itinerary-routes-container {
+    top: 56px;
+  }
+}
+
+@media (max-width: 850px) {
+  .itinerary-routes-container {
+    top: 95px;
+  }
+}

@@ -1,0 +1,19 @@
+
+.selected-transport-container {
+  max-height: 80vh;
+  overflow-y: scroll;
+  overflow-x: hidden
+}
+
+.row-of-icons {
+  display: flex;
+  flex-direction: row;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.select-hover:hover {
+  background-color: #eeeeee;
+}

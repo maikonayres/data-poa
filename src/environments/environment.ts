@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  brandName: 'Data Poa',
+  dataPoa: {
+    baseUrl: 'http://www.poatransporte.com.br/php/facades/process.php',
+    apiVersion: {
+      v1: ''
+    }
+  }
 };
 
 /*

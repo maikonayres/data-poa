@@ -1,0 +1,13 @@
+<ul class="list-group selected-transport-container">
+  <li
+    class="list-group-item  select-hover cursor-pointer"
+    (click)="selectedTransportLineEmitter(transportLine)"
+    *ngFor="let transportLine of transportLines">
+
+   <span class="d-flex">
+     <i class="material-icons mr-2 text-info">{{transportLine.icon}}</i>
+     {{transportLine.codigo}} - {{transportLine.nome}}
+   </span>
+  </li>
+</ul>
+
